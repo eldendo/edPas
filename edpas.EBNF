@@ -1,0 +1,25 @@
+aProgram = "program" ident ";" block "." .
+
+block = [ "const" ident "=" number ";" {ident "=" number ";"}]
+        [ "var" ident {"," ident} ":" "integer" ";"]
+        { "procedure" ident ";" block ";" } compound_statement .
+
+compound_statement = "begin" statement {";" statement } "end" .
+
+statement = [ ident ":=" expression | "call" ident |
+             compound_statement |
+            "if" condition "then" statement |
+            "while" condition "do" statement |
+	    "write" "(" expression ")" |
+	    "writeln" "(" expression")" ]. (* why [] ??? *)
+
+condition = "odd" "(" expression ")" |
+            expression ("="|"#"|"<"|"<="|">"|">=") expression .
+
+expression = [ "+"|"-"] term { ("+"|"-") term}.
+
+term = factor {("*"|"/") factor}.
+
+factor = ident | number | "(" expression ")".
+
+ !!! call must disappeare
